@@ -1,0 +1,48 @@
+services:
+  audiusd-base: &audiusd-base
+    build:
+      context: ../audiusd
+      dockerfile: ./cmd/audiusd/Dockerfile
+      target: prod
+
+  audiusd-dev:
+    <<: *audiusd-base
+    image: audius/audiusd-sandbox:dev
+    container_name: audiusd-dev
+    environment:
+      NETWORK: dev
+      audius_discprov_url: http://0.0.0.0
+      audius_delegate_private_key: 91b45c6deb9658cd5ae0cde814e7c08b481fb638413f6b403e28746eea737cf9
+      audius_core_root_dir: /data/core
+    volumes:
+      - ./tmp/audiusd-dev-data:/data
+    ports:
+      - "3000:26659"
+
+  audiusd-stage:
+    <<: *audiusd-base
+    image: audius/audiusd-sandbox:stage
+    container_name: audiusd-stage
+    environment:
+      NETWORK: stage
+      audius_discprov_url: http://0.0.0.0
+      audius_delegate_private_key: cdf94ebf09c1358acd89f9664b7843c3c125cf1ee03f7e0ea89e8b965bd11514
+      audius_core_root_dir: /data/core
+    volumes:
+      - ./tmp/audiusd-stage-data:/data
+    ports:
+      - "3001:26659"
+
+  audiusd-prod:
+    <<: *audiusd-base
+    image: audius/audiusd-sandbox:prod
+    container_name: audiusd-prod
+    environment:
+      NETWORK: prod
+      audius_discprov_url: http://0.0.0.0
+      audius_delegate_private_key: 02aaa6a190202314981aac2390a6a2d48befb48a213133a5b89530053ee6d18c
+      audius_core_root_dir: /data/core
+    volumes:
+      - ./tmp/audiusd-prod-data:/data
+    ports:
+      - "3002:26659"
