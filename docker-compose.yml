@@ -4,6 +4,14 @@ services:
       context: ../audiusd
       dockerfile: ./cmd/audiusd/Dockerfile
       target: prod
+    volumes:
+      - ./tmp/audiusd-${NETWORK}-${NODE_ID}-data:/data
+      - ./tmp/audiusd-${NETWORK}-${NODE_ID}-data:/audius-core
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
 
   audiusd-dev:
     <<: *audiusd-base
@@ -13,9 +21,9 @@ services:
       NETWORK: dev
       audius_discprov_url: http://0.0.0.0
       audius_delegate_private_key: 91b45c6deb9658cd5ae0cde814e7c08b481fb638413f6b403e28746eea737cf9
-      audius_core_root_dir: /data/core
     volumes:
-      - ./tmp/audiusd-dev-data:/data
+      - ./tmp/audiusd-dev-91b45c-data:/data
+      - ./tmp/audiusd-dev-91b45c-data:/audius-core
     ports:
       - "3000:26659"
 
@@ -27,9 +35,9 @@ services:
       NETWORK: stage
       audius_discprov_url: http://0.0.0.0
       audius_delegate_private_key: cdf94ebf09c1358acd89f9664b7843c3c125cf1ee03f7e0ea89e8b965bd11514
-      audius_core_root_dir: /data/core
     volumes:
-      - ./tmp/audiusd-stage-data:/data
+      - ./tmp/audiusd-stage-cdf94e-data:/data
+      - ./tmp/audiusd-stage-cdf94e-data:/audius-core
     ports:
       - "3001:26659"
 
@@ -41,8 +49,23 @@ services:
       NETWORK: prod
       audius_discprov_url: http://0.0.0.0
       audius_delegate_private_key: 02aaa6a190202314981aac2390a6a2d48befb48a213133a5b89530053ee6d18c
-      audius_core_root_dir: /data/core
     volumes:
-      - ./tmp/audiusd-prod-data:/data
+      - ./tmp/audiusd-prod-02aaa6-data:/data
+      - ./tmp/audiusd-prod-02aaa6-data:/audius-core
     ports:
       - "3002:26659"
+
+  audiusd-prod-2:
+    <<: *audiusd-base
+    image: audius/audiusd-sandbox:prod
+    container_name: audiusd-prod-2
+    environment:
+      NETWORK: prod
+      audius_discprov_url: http://0.0.0.0
+      audius_delegate_private_key: 98dbf5eacd6eb4a6ecef09c5df9e889ef48c04c6508135e4703db191fb1ee559
+      persistentPeers: "104568ad5179dcf6ea4b2c9ae0ab7d49e0c0215f@audiusd-prod:26656"
+    volumes:
+      - ./tmp/audiusd-prod-98dbf5-data:/data
+      - ./tmp/audiusd-prod-98dbf5-data:/audius-core
+    ports:
+      - "3003:26659"

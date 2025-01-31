@@ -10,6 +10,9 @@ stage:
 prod:
 	docker compose up --build audiusd-prod -d
 
+prod-2:
+	docker compose up --build audiusd-prod-2 -d
+
 clean:
 	docker compose down
 	rm -rf ./tmp
