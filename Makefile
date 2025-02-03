@@ -13,6 +13,9 @@ prod:
 prod-2:
 	docker compose up --build audiusd-prod-2 -d
 
+go:
+	go run main.go
+
 clean:
 	docker compose down
 	rm -rf ./tmp

@@ -49,6 +49,7 @@ services:
       NETWORK: prod
       audius_discprov_url: http://0.0.0.0
       audius_delegate_private_key: 02aaa6a190202314981aac2390a6a2d48befb48a213133a5b89530053ee6d18c
+      persistentPeers: "05ff432fd46ead7a6341f7162297b38889583a8c@141.98.217.28:26656,09ecb31f704a3360bd90b95eb3885d92ba61e539@88.99.99.40:26656,1181c8a2d9265d37d534ce42f5d3a18baba4d6e8@74.118.140.83:26656"
     volumes:
       - ./tmp/audiusd-prod-02aaa6-data:/data
       - ./tmp/audiusd-prod-02aaa6-data:/audius-core
