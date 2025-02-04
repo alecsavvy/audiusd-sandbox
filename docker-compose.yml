@@ -41,6 +41,19 @@ services:
     ports:
       - "3001:26659"
 
+  audiusd-prod-sentry:
+    image: audius/audiusd:edge
+    container_name: audiusd-sentry-prod
+    environment:
+      NETWORK: prod
+      audius_discprov_url: http://0.0.0.0
+      audius_delegate_private_key: e6b695135eb6c47bacb28579be59b27abbe1e7a761ed5ee48ee3b3eba93006be
+    volumes:
+      - ./tmp/audiusd-prod-sentry-data:/data
+      - ./tmp/audiusd-prod-sentry-data:/audius-core
+    ports:
+      - "3005:26659"
+
   audiusd-prod:
     <<: *audiusd-base
     image: audius/audiusd-sandbox:prod
@@ -51,8 +64,8 @@ services:
       audius_delegate_private_key: 02aaa6a190202314981aac2390a6a2d48befb48a213133a5b89530053ee6d18c
       persistentPeers: "05ff432fd46ead7a6341f7162297b38889583a8c@141.98.217.28:26656,09ecb31f704a3360bd90b95eb3885d92ba61e539@88.99.99.40:26656,1181c8a2d9265d37d534ce42f5d3a18baba4d6e8@74.118.140.83:26656"
     volumes:
-      - ./tmp/audiusd-prod-02aaa6-data:/data
-      - ./tmp/audiusd-prod-02aaa6-data:/audius-core
+      - ./tmp/audiusd-prod-data:/data
+      - ./tmp/audiusd-prod-data:/audius-core
     ports:
       - "3002:26659"
 
@@ -66,7 +79,7 @@ services:
       audius_delegate_private_key: 98dbf5eacd6eb4a6ecef09c5df9e889ef48c04c6508135e4703db191fb1ee559
       persistentPeers: "104568ad5179dcf6ea4b2c9ae0ab7d49e0c0215f@audiusd-prod:26656"
     volumes:
-      - ./tmp/audiusd-prod-98dbf5-data:/data
-      - ./tmp/audiusd-prod-98dbf5-data:/audius-core
+      - ./tmp/audiusd-prod-data:/data
+      - ./tmp/audiusd-prod-data:/audius-core
     ports:
       - "3003:26659"

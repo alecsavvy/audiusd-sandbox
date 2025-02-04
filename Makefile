@@ -7,6 +7,9 @@ dev:
 stage:
 	docker compose up --build audiusd-stage -d
 
+sentry:
+	docker compose up -d audiusd-prod-sentry
+
 prod:
 	docker compose build --no-cache audiusd-prod && docker compose up -d audiusd-prod
 
